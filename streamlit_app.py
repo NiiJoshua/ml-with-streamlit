@@ -37,3 +37,28 @@ with st.expander('Focus Prediction'):
         st.write('')
         st.write('')
         st.write('Predicted Putput')
+
+        def pred_model(model, scale):
+            with open(model, 'rb') as f:
+                model = pickle.load(f)
+
+            with open(scale, 'rb') as f:
+                scaler = pickle.load(f)
+
+            pred_columns = ['Back Ramp', 'Centre Base', 'Front Ramp', 'Back Wall', 'Left Wall','Right Wall', 'Roof Beams', 'Lintel Beam', 'Door Shaft','Door Fabrication', 'Heat Shield', 'Door Surround Casting','Refractory',]
+
+            t_data = scaler.transform(data)
+            y_pred = model.predict(t_data)
+
+            output_df = pd.DataFrame(y_pred, columns=pred_columns)
+            d3 = {'Variable':output_df.columns, 'Predicted Value':output_df.iloc[0]}
+            final = pd.DataFrame(data=d3)
+            final['Predicted Value'] = final['Predicted Value'].abs()
+            return final
+        
+        pred_data = pred_model('tuned_pkl','scaler_pkl')
+        fig = ff.create_table(pred_data)
+        fig.update_layout(width=670)
+        st.write(fig)
+
+st.write('')
