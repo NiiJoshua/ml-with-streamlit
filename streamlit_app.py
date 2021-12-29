@@ -22,7 +22,7 @@ with st.expander('Focus Prediction'):
     door_width = form.number_input(label = 'Door Width', format="%.2f")
     metal_depth = form.number_input(label = 'Metal Depth', format="%.2f")
     bath_length = form.number_input(label = 'Bath Height', format="%.2f")
-    submit_button = form.forms_submit_button(label = 'Submit')
+    submit_button = form.form_submit_button(label = 'Submit')
 
 
     if submit_button:
