@@ -105,7 +105,7 @@ final_model = Lasso(alpha=0.99)
 final_model.fit(X_scaled, Y_train)
 
 # Save final model
-with open('tuned_plk','wb') as files:
+with open('tuned_pkl','wb') as files:
     pickle.dump(final_model, files)
 
 # make predictions
