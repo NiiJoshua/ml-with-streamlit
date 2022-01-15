@@ -12,7 +12,7 @@ from sklearn.model_selection import cross_val_score, RepeatedKFold, GridSearchCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from streamlit.logger import update_formatter
 
-st.title('Steel prediction app') # setting title 
+st.title('Steel Prediction App') # setting title 
 st.write('')
 
 with st.expander('Focus Prediction'):
@@ -74,7 +74,7 @@ with st.expander('Batch Prediction'):
             try:
                 uploaded_df = pd.read_csv(uploaded_file)
                 content = True
-                return content, uploaded_file
+                return content, uploaded_df
             except:
                 try:
                     uploaded_df = pd.read_excel(uploaded_file)
@@ -95,8 +95,8 @@ with st.expander('Batch Prediction'):
 
     status, df = file_upload('Please upload data to be predicted')
 
-    if st.button('Prdict'):
-        def pre_model(model, scale):
+    if st.button('Predict'):
+        def pred_model(model, scale):
             with open(model, 'rb') as f:
                 model = pickle.load(f)
 
@@ -111,7 +111,7 @@ with st.expander('Batch Prediction'):
             return output_df.abs()
 
         st.write('')
-        st.wrire('Predicted Output')
+        st.write('Predicted Output')
         pred_data = pred_model('tuned_pkl', 'scaler_pkl')
         st.write(pred_data)
         st.markdown(download(pred_data, 'Predicted Output'), unsafe_allow_html=True)
